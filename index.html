@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Instrument+Sans:wght@300;400;500&display=swap');
 :root{--bg:#F2EFE8;--ink:#1E1C18;--acc:#8B7355;--acc2:#C4A882;--pale:#E8E3D8;--serif:'Playfair Display',Georgia,serif;--sans:'Instrument Sans',system-ui,sans-serif;}
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%;}
+html{scroll-behavior:smooth;overflow-x:clip;}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;max-width:100%;}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
 @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
@@ -212,7 +212,7 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
 
   /* STATS — horizontal on mobile */
   .stats-bar { grid-template-columns: repeat(3, 1fr); }
-  .stat-cell { padding: 18px 12px; border-right: 0.5px solid rgba(30,28,24,0.1); border-bottom: none; }
+  .stat-cell { padding: 18px 8px; border-right: 0.5px solid rgba(30,28,24,0.1); border-bottom: none; text-align: center; }
   .stat-cell:last-child { border-right: none; border-bottom: none; }
   .stat-num { font-size: 1.9rem; }
   .stat-lbl { font-size: 9px; }
@@ -309,8 +309,8 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
     <a class="nav-a" href="#about">About</a>
     <a class="nav-a" href="#work">Work</a>
     <a class="nav-a" href="#projects">Projects</a>
-    <a class="nav-a" href="#contact">Contact</a>
     <a class="nav-a" href="#experience">Experience</a>
+    <a class="nav-a" href="#contact">Contact</a>
   </div>
 </nav>
 
@@ -591,8 +591,8 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
     </div>
     <div class="reveal-right" style="display:flex;align-items:center;justify-content:center;">
       <div style="border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(30,28,24,0.12);max-width:420px;width:100%;">
-        <img src="images/mt-fire-year2.jpg" alt="Fantasy Hike Year 2 — Quest completed Day 326" style="width:100%;display:block;">
-        <div style="padding:10px 12px;background:rgba(30,28,24,0.06);"><p style="font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(30,28,24,0.4);">Year two — Day 326</p></div>
+        <img src="images/mt-fire-year1.jpg" alt="Fantasy Hike Year 1 — Quest ended Day 318" style="width:100%;display:block;">
+        <div style="padding:10px 12px;background:rgba(30,28,24,0.06);"><p style="font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(30,28,24,0.4);">Year one — Day 318</p></div>
       </div>
     </div>
   </div>
@@ -629,18 +629,18 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
     <h2 class="contact-h">Let's<br><em>talk.</em></h2>
     <p style="font-size:14px;color:rgba(242,239,232,0.45);line-height:1.75;font-weight:300;margin-bottom:28px;">Share ideas, swap dog pics, talk product — always happy to connect.</p>
     <div>
-      <div class="contact-link-row"><span class="contact-link-label">Email</span><span class="contact-link-val">Sb.Hamberlin@gmail.com</span></div>
-      <div class="contact-link-row"><span class="contact-link-label">LinkedIn</span><span class="contact-link-val">sarabethhamberlin</span></div>
-      <div class="contact-link-row"><span class="contact-link-label">Music</span><span class="contact-link-val">SoundCloud</span></div>
-      <div class="contact-link-row"><span class="contact-link-label">Puzzle</span><span class="contact-link-val">pairsdaily.com</span></div>
+      <a href="mailto:sb.hamberlin@gmail.com" class="contact-link-row"><span class="contact-link-label">Email</span><span class="contact-link-val">Sb.Hamberlin@gmail.com</span></a>
+      <a href="https://www.linkedin.com/in/sarabethhamberlin" target="_blank" rel="noopener noreferrer" class="contact-link-row"><span class="contact-link-label">LinkedIn</span><span class="contact-link-val">sarabethhamberlin</span></a>
+      <a href="https://on.soundcloud.com/gYcQXkHZCeRx62jZqs" target="_blank" rel="noopener noreferrer" class="contact-link-row"><span class="contact-link-label">Music</span><span class="contact-link-val">SoundCloud</span></a>
+      <a href="https://www.pairsdaily.com" target="_blank" rel="noopener noreferrer" class="contact-link-row"><span class="contact-link-label">Puzzle</span><span class="contact-link-val">pairsdaily.com</span></a>
     </div>
   </div>
   <div class="contact-right reveal-right">
     <div class="contact-form">
-      <input type="text" placeholder="Your name">
-      <input type="email" placeholder="Email">
-      <textarea placeholder="What's on your mind?"></textarea>
-      <button class="contact-submit">Send message</button>
+      <input id="cf-name" type="text" placeholder="Your name">
+      <input id="cf-email" type="email" placeholder="Email">
+      <textarea id="cf-msg" placeholder="What's on your mind?"></textarea>
+      <button class="contact-submit" onclick="sendContactForm(event)">Send message</button>
     </div>
   </div>
 </section>
@@ -648,8 +648,10 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
 <footer>
   <span class="footer-name">Sarabeth Hamberlin</span>
   <div class="footer-links">
-    <span class="footer-link">Work</span><span class="footer-link">Projects</span>
-    <span class="footer-link">LinkedIn</span><span class="footer-link">SoundCloud</span>
+    <a class="footer-link" href="#work">Work</a>
+    <a class="footer-link" href="#projects">Projects</a>
+    <a class="footer-link" href="https://www.linkedin.com/in/sarabethhamberlin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a class="footer-link" href="https://on.soundcloud.com/gYcQXkHZCeRx62jZqs" target="_blank" rel="noopener noreferrer">SoundCloud</a>
   </div>
 </footer>
 
@@ -691,6 +693,18 @@ function switchVid(idx, btn) {
     if (i !== idx) document.getElementById('vid-'+i).pause();
   });
   document.querySelectorAll('.vid-tab').forEach((b,i) => b.classList.toggle('on', i===idx));
+}
+
+// Contact form
+function sendContactForm(e) {
+  e.preventDefault();
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-msg').value.trim();
+  if (!name || !msg) { alert('Please fill in your name and message.'); return; }
+  const body = encodeURIComponent(msg + '\n\nFrom: ' + name + (email ? '\nReply to: ' + email : ''));
+  const subject = encodeURIComponent('Portfolio message from ' + name);
+  window.location.href = 'mailto:sb.hamberlin@gmail.com?subject=' + subject + '&body=' + body;
 }
 
 // RA toggle
