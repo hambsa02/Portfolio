@@ -658,6 +658,10 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
 </footer>
 
 <script>
+// Always start at top on refresh
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 // Scroll reveals
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => {
