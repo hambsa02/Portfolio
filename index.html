@@ -742,12 +742,21 @@ async function sendContactForm(e) {
 document.addEventListener('click', function(e) {
   const el = e.target.closest('a, button, .btn-primary, .btn-secondary, .work-card, .nav-a, .nav-cta');
   if (!el || typeof gtag === 'undefined') return;
-  const label = (el.textContent || '').trim().slice(0, 60) || el.getAttribute('href') || 'unknown';
-  const href = el.getAttribute('href') || null;
+  const link_text = (el.textContent || '').trim().slice(0, 60) || 'unknown';
+  const raw_href = el.getAttribute('href') || null;
+  const link_url = raw_href ? (raw_href.startsWith('http') ? raw_href : new URL(raw_href, location.href).href) : null;
+  const section = el.closest('nav') ? 'nav'
+    : el.closest('footer') ? 'footer'
+    : el.closest('#contact') ? 'contact'
+    : el.closest('#work') ? 'work'
+    : el.closest('#projects') ? 'pairs'
+    : el.closest('#ra-case') ? 'reconstructed-ancestors'
+    : (function(){ var s = el.closest('.split'); return s ? (s.querySelector('.eyebrow')||{}).textContent||'section' : 'other'; })();
   gtag('event', 'click', {
-    event_category: href && href.startsWith('http') ? 'outbound' : href && href.startsWith('#') ? 'nav' : 'ui',
-    event_label: label,
-    link_url: href
+    link_text: link_text,
+    link_url: link_url,
+    page_section: section,
+    event_category: raw_href && raw_href.startsWith('http') ? 'outbound' : raw_href && raw_href.startsWith('#') ? 'nav' : 'ui'
   });
 });
 
