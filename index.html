@@ -703,15 +703,34 @@ function switchVid(idx, btn) {
 }
 
 // Contact form
-function sendContactForm(e) {
+async function sendContactForm(e) {
   e.preventDefault();
   const name = document.getElementById('cf-name').value.trim();
   const email = document.getElementById('cf-email').value.trim();
   const msg = document.getElementById('cf-msg').value.trim();
   if (!name || !msg) { alert('Please fill in your name and message.'); return; }
-  const body = encodeURIComponent(msg + '\n\nFrom: ' + name + (email ? '\nReply to: ' + email : ''));
-  const subject = encodeURIComponent('Portfolio message from ' + name);
-  window.location.href = 'mailto:sb.hamberlin@gmail.com?subject=' + subject + '&body=' + body;
+  const btn = document.querySelector('.contact-submit');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://formspree.io/f/xgorkngl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, message: msg })
+    });
+    if (res.ok) {
+      btn.textContent = 'Sent ✓';
+      document.getElementById('cf-name').value = '';
+      document.getElementById('cf-email').value = '';
+      document.getElementById('cf-msg').value = '';
+    } else {
+      throw new Error();
+    }
+  } catch {
+    btn.textContent = 'Send message';
+    btn.disabled = false;
+    alert('Something went wrong — email sb.hamberlin@gmail.com directly.');
+  }
 }
 
 // RA toggle
