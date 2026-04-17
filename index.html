@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href="favicon.png">
-  <!-- other stuff like title, meta, styles -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Instrument+Sans:wght@300;400;500&display=swap');
 :root{--bg:#F2EFE8;--ink:#1E1C18;--acc:#8B7355;--acc2:#C4A882;--pale:#E8E3D8;--serif:'Playfair Display',Georgia,serif;--sans:'Instrument Sans',system-ui,sans-serif;}
@@ -185,6 +183,114 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
 .footer-link{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(242,239,232,0.25);cursor:pointer;transition:color 0.2s;}
 .footer-link:hover{color:var(--acc2);}
 </style>
+<style>
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+
+  /* NAV */
+  nav { padding: 14px 20px; }
+  .nav-links { gap: 14px; }
+  .nav-a { font-size: 9px; letter-spacing: 0.08em; }
+
+  /* HERO — stack vertically, image on top */
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { min-height: 55vw; order: -1; }
+  .hero-left { padding: 36px 24px 48px; justify-content: flex-start; }
+  .hero-h1 { font-size: clamp(2.6rem, 10vw, 4rem); margin-bottom: 20px; }
+  .hero-sub { font-size: 13px; margin-bottom: 28px; max-width: 100%; }
+
+  /* MARQUEE */
+  .marquee-item { padding: 0 18px; font-size: 10px; }
+
+  /* STATS */
+  .stats-bar { grid-template-columns: 1fr; }
+  .stat-cell { padding: 24px 24px; border-right: none; border-bottom: 0.5px solid rgba(30,28,24,0.1); }
+  .stat-cell:last-child { border-bottom: none; }
+  .stat-num { font-size: 2.6rem; }
+
+  /* ABOUT */
+  .about { grid-template-columns: 1fr; }
+  .about-img { min-height: 60vw; }
+  .about-text { padding: 40px 24px; }
+
+  /* WORK / CASE STUDIES */
+  .work-header { padding: 40px 24px 20px; }
+  .case { grid-template-columns: 1fr; }
+  .case-left { padding: 24px 24px 0; border-right: none; border-bottom: 0.5px solid rgba(242,239,232,0.08); }
+  .case-right { padding: 16px 24px 24px; }
+  .case-num { font-size: 2.5rem; margin-bottom: 6px; }
+
+  /* PAIRS / RA — stacked */
+  .pairs-inner { grid-template-columns: 1fr; gap: 32px; }
+  section[style*="background:var(--pale)"][style*="padding:72px"] { padding: 48px 24px !important; }
+  section[id="ra-case"] { padding: 48px 24px !important; }
+  .detail-grid { grid-template-columns: 1fr 1fr; }
+
+  /* SPLIT SECTIONS (music, climbing, ceramics, tiktok) */
+  .split { grid-template-columns: 1fr; }
+  .split-text { padding: 40px 24px; order: 1; }
+  .split-media-dark { order: 2; padding: 24px; }
+  .split-media-img { min-height: 60vw; order: 2; }
+  /* Flip order for right-media sections */
+  .split > .reveal-left.split-media-img { order: 1; }
+  .split > .reveal-right.split-text { order: 2; }
+
+  /* CERAMICS */
+  .ceramics-grid { height: auto; }
+  .ceramics-main { aspect-ratio: 4/3; }
+
+  /* PAIRS screenshots — full width */
+  .pairs-shots { grid-template-columns: 1fr 1fr; max-width: 360px; }
+
+  /* EXPERIENCE */
+  .exp-wrap { padding: 48px 24px; }
+  .exp-row { grid-template-columns: 1fr; gap: 8px; }
+  .exp-tags { display: none; }
+
+  /* LIFE GALLERY */
+  .life-wrap { padding: 48px 24px; }
+  .photo-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .photo-cell.tall { grid-row: span 1; aspect-ratio: 4/3; }
+  .photo-cell { aspect-ratio: 4/3; }
+
+  /* CONTACT */
+  .contact-wrap { grid-template-columns: 1fr; }
+  .contact-left { padding: 48px 24px 32px; }
+  .contact-right { padding: 32px 24px 48px; }
+
+  /* MOUNT FIRE / RA detail grids */
+  section[style*="background:var(--pale)"][style*="padding:72px 48px"] .pairs-inner > div:last-child { 
+    grid-template-columns: 1fr 1fr; 
+  }
+
+  /* Inline padded sections */
+  .exp-wrap, .life-wrap { padding-left: 24px; padding-right: 24px; }
+
+  footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  .footer-links { justify-content: center; flex-wrap: wrap; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  .nav-links { gap: 10px; }
+  .nav-a { font-size: 8px; }
+  .hero-h1 { font-size: clamp(2.2rem, 9vw, 3.2rem); }
+  .detail-grid { grid-template-columns: 1fr; }
+  .pairs-shots { grid-template-columns: 1fr 1fr; }
+  .photo-mosaic { grid-template-columns: 1fr; }
+  .photo-cell { aspect-ratio: 4/3; }
+  .photo-cell.tall { grid-row: span 1; }
+
+  /* RA loop — single col on small phones */
+  #ra-body > div[style*="grid-template-columns:repeat(5"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Tiktok screenshot centering */
+  .split-media-dark > div { width: 100% !important; max-width: 280px; margin: 0 auto; }
+}
+</style>
+
 </head>
 <body>
 
