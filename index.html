@@ -7,8 +7,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Instrument+Sans:wght@300;400;500&display=swap');
 :root{--bg:#F2EFE8;--ink:#1E1C18;--acc:#8B7355;--acc2:#C4A882;--pale:#E8E3D8;--serif:'Playfair Display',Georgia,serif;--sans:'Instrument Sans',system-ui,sans-serif;}
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;}
+html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;max-width:100%;}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
 @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
@@ -69,25 +69,23 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 .tag:hover{border-color:var(--acc);color:var(--acc);}
 
 /* WORK */
-.work{background:var(--ink);color:var(--bg);}
+.work{background:var(--ink);color:var(--bg);padding-bottom:56px;}
 .work-header{padding:56px 48px 28px;}
 .work-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--acc2);margin-bottom:12px;}
 .work-h{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3rem);font-weight:900;margin-bottom:6px;}
 .work-sub{font-size:13px;color:rgba(242,239,232,0.4);font-weight:300;}
-.case-list{display:flex;flex-direction:column;}
-.case{display:grid;grid-template-columns:260px 1fr;border-top:0.5px solid rgba(242,239,232,0.1);cursor:pointer;transition:background 0.25s;}
-.case:last-child{border-bottom:0.5px solid rgba(242,239,232,0.1);}
-.case:hover{background:rgba(255,255,255,0.04);}
-.case-left{padding:28px 36px;border-right:0.5px solid rgba(242,239,232,0.08);}
+.work-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:0.5px solid rgba(242,239,232,0.1);overscroll-behavior-x:contain;}
+.work-carousel::-webkit-scrollbar{display:none;}
+.work-card{flex:0 0 380px;scroll-snap-align:start;padding:32px 36px;border-right:0.5px solid rgba(242,239,232,0.1);display:flex;flex-direction:column;min-height:380px;cursor:pointer;transition:background 0.25s;}
+.work-card:hover{background:rgba(255,255,255,0.04);}
 .case-num{font-family:var(--serif);font-size:3.5rem;font-weight:900;line-height:1;color:rgba(242,239,232,0.05);margin-bottom:10px;}
 .case-tag{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--acc2);margin-bottom:7px;}
 .case-title{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--bg);line-height:1.2;margin-bottom:14px;}
-.case-metrics{display:flex;gap:24px;}
+.case-metrics{display:flex;gap:24px;margin-bottom:16px;}
 .case-mv{font-family:var(--serif);font-size:1.6rem;font-weight:700;line-height:1;color:var(--bg);}
 .case-ml{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,239,232,0.3);margin-top:2px;}
-.case-right{padding:28px 36px;display:flex;flex-direction:column;justify-content:center;}
 .case-desc{font-size:13px;color:rgba(242,239,232,0.45);line-height:1.7;font-weight:300;margin-bottom:12px;}
-.case-bullets{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.case-bullets{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:auto;}
 .case-bullets li{font-size:11px;color:rgba(242,239,232,0.28);padding-left:14px;position:relative;line-height:1.5;font-weight:300;}
 .case-bullets li::before{content:'—';position:absolute;left:0;color:rgba(242,239,232,0.15);}
 
@@ -213,11 +211,10 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
   .about-img { min-height: 60vw; }
   .about-text { padding: 40px 24px; }
 
-  /* WORK / CASE STUDIES */
+  /* WORK CAROUSEL */
   .work-header { padding: 40px 24px 20px; }
-  .case { grid-template-columns: 1fr; }
-  .case-left { padding: 24px 24px 0; border-right: none; border-bottom: 0.5px solid rgba(242,239,232,0.08); }
-  .case-right { padding: 16px 24px 24px; }
+  .work { padding-bottom: 0; }
+  .work-card { flex: 0 0 85vw; scroll-snap-align: center; padding: 24px; min-height: 320px; }
   .case-num { font-size: 2.5rem; margin-bottom: 6px; }
 
   /* PAIRS / RA — stacked */
@@ -368,67 +365,51 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
     <h2 class="work-h">The work.</h2>
     <p class="work-sub">The headlines.</p>
   </div>
-  <div class="case-list">
-    <div class="case reveal">
-      <div class="case-left">
-        <div class="case-num">01</div>
-        <p class="case-tag">Partnership · Genealogy</p>
-        <h3 class="case-title">Major genealogy data partnership</h3>
-        <div class="case-metrics">
-          <div><div class="case-mv">$1M+</div><div class="case-ml">Contract</div></div>
-          <div><div class="case-mv">6</div><div class="case-ml">Teams</div></div>
-        </div>
+  <div class="work-carousel">
+    <div class="work-card reveal">
+      <div class="case-num">01</div>
+      <p class="case-tag">Partnership · Genealogy</p>
+      <h3 class="case-title">Major genealogy data partnership</h3>
+      <div class="case-metrics">
+        <div><div class="case-mv">$1M+</div><div class="case-ml">Contract</div></div>
+        <div><div class="case-mv">6</div><div class="case-ml">Teams</div></div>
       </div>
-      <div class="case-right">
-        <p class="case-desc">End-to-end deal across privacy, legal, product, and engineering.</p>
-        <ul class="case-bullets"><li>Scoped integration across 4 product surfaces</li><li>Navigated legal, privacy, and engineering simultaneously</li><li>Managed ongoing partnership post-close</li></ul>
-      </div>
+      <p class="case-desc">End-to-end deal across privacy, legal, product, and engineering.</p>
+      <ul class="case-bullets"><li>Scoped integration across 4 product surfaces</li><li>Navigated legal, privacy, and engineering simultaneously</li><li>Managed ongoing partnership post-close</li></ul>
     </div>
-    <div class="case reveal">
-      <div class="case-left">
-        <div class="case-num">02</div>
-        <p class="case-tag">0→1 · Genetic Genealogy</p>
-        <h3 class="case-title">Reconstructed Ancestors</h3>
-        <div class="case-metrics">
-          <div><div class="case-mv">140k</div><div class="case-ml">MAU</div></div>
-          <div><div class="case-mv">25.7%</div><div class="case-ml">Re-engagement</div></div>
-        </div>
+    <div class="work-card reveal">
+      <div class="case-num">02</div>
+      <p class="case-tag">0→1 · Genetic Genealogy</p>
+      <h3 class="case-title">Latest genetic genealogy feature</h3>
+      <div class="case-metrics">
+        <div><div class="case-mv">140k</div><div class="case-ml">MAU</div></div>
+        <div><div class="case-mv">25.7%</div><div class="case-ml">Re-engagement</div></div>
       </div>
-      <div class="case-right">
-        <p class="case-desc">First genealogy feature at 23andMe. R&D to GA in under 12 months.</p>
-        <ul class="case-bullets"><li>Outperforms all previous re-engagement drivers</li><li>Multiple UXR rounds + iterative beta</li></ul>
-        <a href="#ra-case" style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--acc2);border-bottom:0.5px solid var(--acc2);padding-bottom:2px;display:inline-block;margin-top:10px;transition:opacity 0.2s;">Full case study ↓</a>
-      </div>
+      <p class="case-desc">First genealogy feature at 23andMe. R&D to GA in under 12 months.</p>
+      <ul class="case-bullets"><li>Outperforms all previous re-engagement drivers</li><li>Multiple UXR rounds + iterative beta</li></ul>
+      <a href="#ra-case" style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--acc2);border-bottom:0.5px solid var(--acc2);padding-bottom:2px;display:inline-block;margin-top:16px;transition:opacity 0.2s;">Full case study ↓</a>
     </div>
-    <div class="case reveal">
-      <div class="case-left">
-        <div class="case-num">03</div>
-        <p class="case-tag">Engagement · Cross-functional</p>
-        <h3 class="case-title">Subscriber Engagement</h3>
-        <div class="case-metrics">
-          <div><div class="case-mv">+18%</div><div class="case-ml">Lift</div></div>
-          <div><div class="case-mv">6+</div><div class="case-ml">Teams</div></div>
-        </div>
+    <div class="work-card reveal">
+      <div class="case-num">03</div>
+      <p class="case-tag">Engagement · Cross-functional</p>
+      <h3 class="case-title">Subscriber Engagement</h3>
+      <div class="case-metrics">
+        <div><div class="case-mv">+18%</div><div class="case-ml">Lift</div></div>
+        <div><div class="case-mv">6+</div><div class="case-ml">Teams</div></div>
       </div>
-      <div class="case-right">
-        <p class="case-desc">Led workstream across engineering, marketing, brand, product, science.</p>
-        <ul class="case-bullets"><li>Built measurement framework from scratch</li><li>18% lift in under 6 months</li></ul>
-      </div>
+      <p class="case-desc">Led workstream across engineering, marketing, brand, product, science.</p>
+      <ul class="case-bullets"><li>Built measurement framework from scratch</li><li>18% lift in under 6 months</li></ul>
     </div>
-    <div class="case reveal">
-      <div class="case-left">
-        <div class="case-num">04</div>
-        <p class="case-tag">0→1 · Consumer Social</p>
-        <h3 class="case-title">After School</h3>
-        <div class="case-metrics">
-          <div><div class="case-mv">#1</div><div class="case-ml">App Store</div></div>
-          <div><div class="case-mv">5x</div><div class="case-ml">Team growth</div></div>
-        </div>
+    <div class="work-card reveal">
+      <div class="case-num">04</div>
+      <p class="case-tag">0→1 · Consumer Social</p>
+      <h3 class="case-title">After School</h3>
+      <div class="case-metrics">
+        <div><div class="case-mv">#1</div><div class="case-ml">App Store</div></div>
+        <div><div class="case-mv">5x</div><div class="case-ml">Team growth</div></div>
       </div>
-      <div class="case-right">
-        <p class="case-desc">First employee. Zero to 90% of U.S. high schools.</p>
-        <ul class="case-bullets"><li>90% U.S. high school penetration</li><li>Grew team 5x</li></ul>
-      </div>
+      <p class="case-desc">First employee. Zero to 90% of U.S. high schools.</p>
+      <ul class="case-bullets"><li>90% U.S. high school penetration</li><li>Grew team 5x</li></ul>
     </div>
   </div>
 </section>
