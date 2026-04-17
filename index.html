@@ -93,6 +93,12 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 .case-bullets li{font-size:11px;color:rgba(242,239,232,0.28);padding-left:14px;position:relative;line-height:1.5;font-weight:300;}
 .case-bullets li::before{content:'—';position:absolute;left:0;color:rgba(242,239,232,0.15);}
 
+/* DESKTOP — work cards as grid, no scroll */
+@media (min-width: 769px) {
+  .work-carousel { display:grid; grid-template-columns:repeat(4,1fr); overflow-x:visible; scroll-snap-type:none; touch-action:auto; }
+  .work-card { flex:unset; scroll-snap-align:none; }
+}
+
 /* SPLIT SECTIONS — Music, Climbing, Ceramics, TikTok, Mount Fire */
 .split{display:grid;grid-template-columns:1fr 1fr;}
 .split-text{padding:64px 48px;display:flex;flex-direction:column;justify-content:center;}
@@ -204,11 +210,12 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
   /* MARQUEE */
   .marquee-item { padding: 0 18px; font-size: 10px; }
 
-  /* STATS */
-  .stats-bar { grid-template-columns: 1fr; }
-  .stat-cell { padding: 24px 24px; border-right: none; border-bottom: 0.5px solid rgba(30,28,24,0.1); }
-  .stat-cell:last-child { border-bottom: none; }
-  .stat-num { font-size: 2.6rem; }
+  /* STATS — horizontal on mobile */
+  .stats-bar { grid-template-columns: repeat(3, 1fr); }
+  .stat-cell { padding: 18px 12px; border-right: 0.5px solid rgba(30,28,24,0.1); border-bottom: none; }
+  .stat-cell:last-child { border-right: none; border-bottom: none; }
+  .stat-num { font-size: 1.9rem; }
+  .stat-lbl { font-size: 9px; }
 
   /* ABOUT */
   .about { grid-template-columns: 1fr; }
@@ -311,8 +318,8 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
 <section class="hero">
   <div class="hero-left">
     <p class="hero-eyebrow">Group Product Manager</p>
-    <h1 class="hero-h1">Building products<br>that make people<br><em>feel.</em></h1>
-    <p class="hero-sub">Reconstructing your ancestors, phasing your genome, writing you daily word puzzles and re-hashing my life through song.</p>
+    <h1 class="hero-h1">Where instinct<br>becomes<br><em>interface.</em></h1>
+    <p class="hero-sub">Reconstructing your ancestors, building the systems you don't see, writing daily word puzzles and rehashing my life through song writing.</p>
 
   </div>
   <div class="hero-right">
@@ -351,13 +358,13 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
   <div class="about-text reveal-right">
     <p class="eyebrow">About</p>
     <h2 class="section-h">PM.<br>Musician.<br><em style="font-style:italic;color:var(--acc)">Builder.</em></h2>
-    <p class="body-text">I lead our Ancestry and Subscription services for millions of users at 23andMe.</p>
+    <p class="body-text">I currently lead our Ancestry and Subscription services at 23andMe.</p>
     <p class="body-text">Driven by curiosity that powers deep dives into game building, music, climbing, multi-media ceramics and whatever strikes my latest fancy.</p>
     <div class="tags">
-      <span class="tag">Behavioral Science</span><span class="tag">Genetics</span>
-      <span class="tag">0-to-1</span><span class="tag">Rock Climbing</span>
-      <span class="tag">Word Puzzles</span><span class="tag">Music</span>
-      <span class="tag">Ceramics</span>
+      <span class="tag">Product</span><span class="tag">Behavioral Science</span><span class="tag">Genetics</span>
+      <span class="tag">0-to-1</span><span class="tag">Systems Thinking</span><span class="tag">Rock Climbing</span>
+      <span class="tag">Word Puzzles</span><span class="tag">Music</span><span class="tag">Storytelling</span>
+      <span class="tag">Ceramics</span><span class="tag">Consumer</span>
     </div>
   </div>
 </section>
@@ -513,11 +520,11 @@ footer{background:var(--ink);border-top:0.5px solid rgba(242,239,232,0.08);paddi
 </section>
 
 <!-- 7. CLIMBING -->
-<section class="split" style="flex-direction:row-reverse;background:var(--pale);">
-  <div class="split-text pale reveal-right">
-    <p class="eyebrow">Climbing</p>
-    <h2 class="split-h">Conquering<br><em>heights.</em></h2>
-    <p class="split-body">I have a fear of heights. Nothing makes progress easier to measure than routinely climbing up cliffs.</p>
+<section class="split" style="flex-direction:row-reverse;background:var(--ink);">
+  <div class="split-text dark reveal-right">
+    <p class="eyebrow" style="color:var(--acc2);">Climbing</p>
+    <h2 class="split-h" style="color:var(--bg);">Conquering<br><em style="color:var(--acc2);">heights.</em></h2>
+    <p class="split-body-dark">I have a fear of heights. Nothing makes progress easier to measure than routinely climbing up cliffs.</p>
   </div>
   <div class="split-media-img reveal-left" style="min-height:420px;">
     <img src="images/hang.jpg" alt="Sarabeth hanging on rope over the ocean">
