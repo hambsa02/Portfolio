@@ -736,6 +736,37 @@ async function sendContactForm(e) {
   }
 }
 
+// ── ANALYTICS ──
+
+// Click tracking — all buttons, links, and nav items
+document.addEventListener('click', function(e) {
+  const el = e.target.closest('a, button, .btn-primary, .btn-secondary, .work-card, .nav-a, .nav-cta');
+  if (!el || typeof gtag === 'undefined') return;
+  const label = (el.textContent || '').trim().slice(0, 60) || el.getAttribute('href') || 'unknown';
+  const href = el.getAttribute('href') || null;
+  gtag('event', 'click', {
+    event_category: href && href.startsWith('http') ? 'outbound' : href && href.startsWith('#') ? 'nav' : 'ui',
+    event_label: label,
+    link_url: href
+  });
+});
+
+// Scroll depth — 25%, 50%, 75% (GA4 Enhanced already covers 90%)
+(function() {
+  const milestones = [25, 50, 75];
+  const fired = new Set();
+  window.addEventListener('scroll', function() {
+    if (typeof gtag === 'undefined') return;
+    const pct = Math.round(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100);
+    milestones.forEach(function(m) {
+      if (!fired.has(m) && pct >= m) {
+        fired.add(m);
+        gtag('event', 'scroll_depth', { event_category: 'engagement', event_label: m + '%', value: m });
+      }
+    });
+  }, { passive: true });
+})();
+
 // RA toggle
 function toggleRA(btn) {
   var body = document.getElementById('ra-body');
