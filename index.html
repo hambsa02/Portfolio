@@ -78,7 +78,7 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 .work-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--acc2);margin-bottom:12px;}
 .work-h{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3rem);font-weight:900;margin-bottom:6px;}
 .work-sub{font-size:13px;color:rgba(242,239,232,0.4);font-weight:300;}
-.work-carousel{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:1px solid rgba(242,239,232,0.22);overscroll-behavior-x:contain;touch-action:pan-x;}
+.work-carousel{display:flex;overflow-x:auto;overflow-y:clip;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:1px solid rgba(242,239,232,0.22);overscroll-behavior-x:contain;touch-action:pan-y;}
 .work-carousel::-webkit-scrollbar{display:none;}
 .work-card{flex:0 0 380px;scroll-snap-align:start;padding:32px 36px;border-right:1px solid rgba(242,239,232,0.18);display:flex;flex-direction:column;min-height:380px;cursor:pointer;transition:background 0.25s;background:rgba(255,255,255,0);}
 .work-card:nth-child(2){background:rgba(255,255,255,0.025);}
@@ -774,6 +774,47 @@ document.addEventListener('click', function(e) {
       }
     });
   }, { passive: true });
+})();
+
+// Carousel touch handling — pan-y on the element lets vertical scroll pass through;
+// JS takes over horizontal swiping and snaps to the nearest card on release.
+(function() {
+  const carousel = document.querySelector('.work-carousel');
+  if (!carousel) return;
+  let startX, startY, startScroll, isHoriz = null;
+
+  carousel.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    startScroll = carousel.scrollLeft;
+    isHoriz = null;
+  }, {passive: true});
+
+  carousel.addEventListener('touchmove', function(e) {
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if (isHoriz === null && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+      isHoriz = Math.abs(dx) > Math.abs(dy);
+    }
+    if (isHoriz) {
+      e.preventDefault();
+      carousel.scrollLeft = startScroll - dx;
+    }
+  }, {passive: false});
+
+  carousel.addEventListener('touchend', function() {
+    if (!isHoriz) return;
+    // Snap to nearest card
+    const cards = carousel.querySelectorAll('.work-card');
+    const center = carousel.scrollLeft + carousel.offsetWidth / 2;
+    let closest = cards[0], minDist = Infinity;
+    cards.forEach(function(card) {
+      const dist = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
+      if (dist < minDist) { minDist = dist; closest = card; }
+    });
+    const target = closest.offsetLeft - (carousel.offsetWidth - closest.offsetWidth) / 2;
+    carousel.scrollTo({left: target, behavior: 'smooth'});
+  }, {passive: true});
 })();
 
 // RA toggle
